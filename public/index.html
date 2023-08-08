@@ -13,7 +13,8 @@
 </head>
 
 <body>
-    <h2>My Bootcamp API</h2>
+    <h1>My Bootcamp API</h1>
+
     <div class="widget" x-data="{
             sentence: '',
             longestWord: '',
@@ -30,8 +31,30 @@
                         this.resultToShow = ''; // Reset the selected result
                     });
             }
+        }"> 
+
+        <!-- Enough airtime -->
+        <div class="widget" x-data="{
+            usage: '',
+            available: '',
+            result: '',
+    
+            checkAirtime() {
+                axios.post('/api/enough', {
+                    usage: this.usage,
+                    available: this.available
+                })
+                .then((response) => {
+                    this.result = response.data.result;
+                })
+                .catch((error) => {
+                    console.error(error);
+                    this.result = 'Error';
+                });
+            }
         }">
-        <h1>Word game Widget</h1>
+
+        <h2>Word game Widget</h2>
 
         <div>
             <textarea x-model="sentence" name="" id="" cols="30" rows="5"></textarea>
@@ -71,4 +94,35 @@
             </div>
         </div>
     </div>
+
+    <h3>Enough Airtime Widget</h3>
+        <div>
+            <label for="usage">Projected Usage (comma-separated):</label>
+            <input type="text" x-model="usage" id="usage">
+        </div>
+        <div>
+            <label for="available">Available Airtime:</label>
+            <input type="number" x-model="available" id="available">
+        </div>
+        <div>
+            <button x-on:click="checkAirtime">Check Airtime</button>
+        </div>
+        <div x-show="result">
+            Result: <span x-text="result"></span>
+        </div>
+    
+    <!-- totalPhoneBill -->
+    <div class="container mt-4">
+        <h3>Calculate Bill Wiget</h3>
+        <div class="card-body">
+            <label for="billInput">Enter a bill:</label>
+            <input class="form-control" type="text" x-model="enteredBill" id="billInput" placeholder="enter a bill">
+            <button class="btn btn-primary mt-3" @click="calculateBill">Done</button>
+           
+            <!-- Clear button -->
+            <button class="btn btn-secondary mt-3" @click="clearForm">Clear</button>
+        </div>
+    </div>
+
 </body>
+</html>

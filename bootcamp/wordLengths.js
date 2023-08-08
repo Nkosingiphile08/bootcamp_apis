@@ -7,4 +7,4 @@ export default function wordLengths(sentence) {
   return sum;
 }
 
-console.log(wordLengths('The dog jumped over the shipyard fence'));
+console.log(wordLengths('The dog jumped over the shipyard fence in Greenvillage'));

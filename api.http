@@ -1,0 +1,41 @@
+###
+POST http://localhost:4009
+Content-Type: application/json
+
+{
+ "longestWord" : "Greenvillage",
+ "shortestWord" : "in",
+ "wordLengths" : 46,
+}
+
+###
+GET http://localhost:4009/api/phonebill/prices?type=sms&price=0.65
+
+###
+POST http://localhost:4009/api/phonebill/price
+Content-Type: application/json
+
+{
+  "type": "call",
+  "types": "2.75"
+}
+
+###
+POST http://localhost:4009/api/phonebill/total
+Content-Type: application/json
+
+{
+  "bill": "call, sms, sms, call"
+  
+}
+###
+GET http://localhost:4009/api/phonebill/total?bill=call,sms,call,sms,sms
+
+###
+POST http://localhost:3000/api/enough
+Content-Type: application/json
+
+{
+  "usage": "call,sms,call",
+  "available": 54
+}

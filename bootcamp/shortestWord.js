@@ -6,5 +6,5 @@ export default function shortestWord(sentence) {
           shortest = word[i];
         }
         } return shortest.toLowerCase();
-      } console.log(shortestWord('The dog jumped over the shipyard fence'))
+      } console.log(shortestWord('The dog jumped over the shipyard fence in Greenvillage'))
       

@@ -6,5 +6,6 @@ export default function longestWord(sentence) {
            longest = word[i];
          }
         } return longest;
-        } console.log(longestWord('The dog jumped over the shipyard fence'))
+        } 
+        console.log(longestWord('The dog jumped over the shipyard fence in Greenvillage'))
          
