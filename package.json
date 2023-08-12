@@ -25,10 +25,11 @@
   "contributors": [],
   "scripts": {
     "dev": "",
-    "test": ""
+    "start": "npm start"
   },
   "dependencies": {
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "nodemon": "^3.0.1"
   },
   "devDependencies": {
     "mocha": "^10.2.0"

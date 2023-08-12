@@ -1,9 +1,9 @@
 export default function longestWord(sentence) {
-        let word = sentence.split(' ');
-          var longest = '';
+        var word = sentence.split(' ');
+        var longest = '';
           for (let i=0; i<word.length; i++) {
          if (word[i].length >= longest.length) {
-           longest = word[i];
+           longest = word[i].trim();
          }
         } return longest;
         } 

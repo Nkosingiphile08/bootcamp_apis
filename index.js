@@ -4,11 +4,11 @@ import longestWord from './bootcamp/longestWord.js';
 import shortestWord from './bootcamp/shortestWord.js';
 import wordLengths from './bootcamp/wordLengths.js';
 
-import totalPhoneBill from './totalPhoneBill.js';
-import enoughAirtime from './enougAirtime.js';
+import {totalPhoneBill} from './totalPhoneBill.js';
+import {enoughAirtime} from './enougAirtime.js';
 
 const app = express();
-
+app.use(express.json());
 app.use(express.static('public'));
 
 app.get('/api/word_game', function (req, res) {
@@ -20,11 +20,12 @@ app.get('/api/word_game', function (req, res) {
     });
 });
 
-const PORT = 4009;
-app.listen(PORT, function () {
-    console.log('api started on port', PORT);
-});
 
+// Start the server
+
+const PORT = process.env.PORT || 4009;
+
+app.listen(PORT, ()=> console.log(`Server running on port ${PORT}`))
 
 // Define the types and bills objects
 const types = {
@@ -48,6 +49,7 @@ app.get('/api/phonebill/prices', function (req, res) {
     });
 });
 
+
 // Add an entry to our types map
 app.post('/api/phonebill/price', function (req, res) {
     const type = req.body.type;
@@ -59,10 +61,11 @@ app.post('/api/phonebill/price', function (req, res) {
     });
 });
 
+
 // Add an entry to our bills map
 app.post('/api/phonebill/total', function (req, res) {
     const bill = req.body.bill;
-    bills.bill = req.body.bill.bills;
+    bills[bill] = req.body.bills;
 
     res.json({
         status: 'success',
@@ -79,23 +82,39 @@ app.get('/api/phonebill/total', function (req, res) {
     });
 });
 
-// Start the server
-const port = 4009;
-app.listen(port, () => {
-    console.log(`Server running on port ${port}`);
+// POST route /api/phonebill/price
+app.post('/api/phonebill/price', (req, res) => {
+    const { type, price } = req.body;
+
+    if (type === 'call') {
+        callPrice = price;
+        res.json({ status: 'success', message: `The call was set to ${price}` });
+    } else if (type === 'sms') {
+        smsPrice = price;
+        res.json({ status: 'success', message: `The SMS was set to ${price}` });
+    } else {
+        res.status(400).json({ status: 'error', message: 'Invalid type' });
+    }
 });
 
+
 // enoughAirtime
-const postEnough = async (req, res) => {
-    const { usage, available } = req.body;
-    const remainingAirtime = enoughAirtime(usage, available);
+app.post('/api/enough', (req, res) => {
+    const usage = req.body.usage;
+    const available = req.body.available;
+
     res.json({
-        result: remainingAirtime,
+        message: `usage: ${usage} and entered amount: ${available}`
     });
-};
+});
 
-const express = require("express");
 
-app.post("/api/enough", postEnough);
+app.get('/api/enough', (req, res) => {
+    const usage = req.query.usage;
+    const available = req.query.available;
 
-app.listen(3000);
+
+    res.json({
+        result: enoughAirtime(usage, available)
+    });
+})

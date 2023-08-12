@@ -1,12 +1,5 @@
 ###
-POST http://localhost:4009
-Content-Type: application/json
-
-{
- "longestWord" : "Greenvillage",
- "shortestWord" : "in",
- "wordLengths" : 46,
-}
+GET http://localhost:4009/api/word_game?sentence=The%20dog%20jumped%20over%20the%20shipyard%20fence%20in%20Greenvillage
 
 ###
 GET http://localhost:4009/api/phonebill/prices?type=sms&price=0.65
@@ -21,6 +14,13 @@ Content-Type: application/json
 }
 
 ###
+GET http://localhost:4009/api/phonebill/prices
+{
+ "call" : "2.75",
+ "sms" : "0.65"
+}
+
+###
 POST http://localhost:4009/api/phonebill/total
 Content-Type: application/json
 
@@ -28,11 +28,22 @@ Content-Type: application/json
   "bill": "call, sms, sms, call"
   
 }
+
 ###
 GET http://localhost:4009/api/phonebill/total?bill=call,sms,call,sms,sms
 
+
 ###
-POST http://localhost:3000/api/enough
+POST http://localhost:4009/api/phonebill/price 
+Content-Type: application/json
+
+{
+  "type" : "sms",
+  "price" : "2.85"
+}
+
+###
+POST http://localhost:4009/api/enough
 Content-Type: application/json
 
 {

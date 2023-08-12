@@ -30,20 +30,30 @@
                         this.wordLengths = result.data.sum;
                         this.resultToShow = ''; // Reset the selected result
                     });
-            }
-        }"> 
-
-        <!-- Enough airtime -->
-        <div class="widget" x-data="{
+            },
+            billTotal: '',
             usage: '',
             available: '',
+            usage1: '',
+            available1: '',
             result: '',
+            enteredBill: '',
+            phonebill: '',
     
-            checkAirtime() {
-                axios.post('/api/enough', {
-                    usage: this.usage,
-                    available: this.available
+            calculateBill(){
+                axios.get(`/api/phonebill/total?bill=${this.phonebill}`)
+                .then(result => {
+                    console.log(result.data)
+                    this.billTotal = result.data.bill
                 })
+            },
+            clearForm() {    
+                this.enteredBill = '';
+                this.showResult = false;
+            },
+
+            checkAirtime() {
+                axios.get(`/api/enough?usage=${this.usage}&available=${this.available}`)
                 .then((response) => {
                     this.result = response.data.result;
                 })
@@ -51,75 +61,92 @@
                     console.error(error);
                     this.result = 'Error';
                 });
+        
+            },
+            clearForm() {
+                this.usage1 = '';
+                this.available1 = '';
+                this.result = '';
             }
         }">
 
-        <h2>Word game Widget</h2>
+        <!-- Enough airtime -->
+        <div class="container mt-4">
 
-        <div>
-            <textarea x-model="sentence" name="" id="" cols="30" rows="5"></textarea>
-            <div><button x-on:click="checkSentence">Check Sentence</button></div>
-        </div>
-
-        <div>
-            <!-- Radio buttons for the results -->
+            <h3>Word game Widget</h3>
             <div>
-                <input type="radio" id="longest" name="result" value="longest" x-model="resultToShow">
-                <label for="longest">Longest word: <span x-text="longestWord"></span></label>
+                <textarea x-model="sentence" name="" id="" cols="30" rows="5"></textarea>
+                <div><button x-on:click="checkSentence">Check Sentence</button></div>
             </div>
 
             <div>
-                <input type="radio" id="shortest" name="result" value="shortest" x-model="resultToShow">
-                <label for="shortest">Shortest word: <span x-text="shortestWord"></span></label>
+                <!-- Radio buttons for the results -->
+                <div>
+                    <input type="radio" id="longest" name="result" value="longest" x-model="resultToShow">
+                    <label for="longest">Longest word: <span x-text="longestWord"></span></label>
+                </div>
+
+                <div>
+                    <input type="radio" id="shortest" name="result" value="shortest" x-model="resultToShow">
+                    <label for="shortest">Shortest word: <span x-text="shortestWord"></span></label>
+                </div>
+
+                <div>
+                    <input type="radio" id="wordLengths" name="result" value="wordLengths" x-model="resultToShow">
+                    <label for="wordLengths">Word count: <span x-text="wordLengths"></span></label>
+                </div>
             </div>
 
             <div>
-                <input type="radio" id="wordLengths" name="result" value="wordLengths" x-model="resultToShow">
-                <label for="wordLengths">Word count: <span x-text="wordLengths"></span></label>
+                <!-- Display the selected result -->
+                <div x-show="resultToShow === 'longest'">
+                    Longest word: <span x-text="longestWord"></span>
+                </div>
+
+                <div x-show="resultToShow === 'shortest'">
+                    Shortest word: <span x-text="shortestWord"></span>
+                </div>
+
+                <div x-show="resultToShow === 'wordLengths'">
+                    Word count: <span x-text="wordLengths"></span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="container mt-4">
+            <h3>Enough Airtime Widget</h3>
+            <div>
+                <label for="usage">Projected Usage:</label>
+                <input type="text" x-model="usage1" id="usage">
+            </div>
+            <br>
+            <div>
+                <label for="available">Available Airtime:</label>
+                <input type="number" x-model="available1" id="available">
+            </div>
+            <br>
+            <div>
+                <button x-on:click="checkAirtime">Check Airtime</button>
+            </div>
+            <br>
+            <button class="btn btn-secondary mt-3" x-on:click="clearForm">Clear</button>
+            <br>
+            <div x-show="result">
+                Result: <span x-text="result"></span>
             </div>
         </div>
 
-        <div>
-            <!-- Display the selected result -->
-            <div x-show="resultToShow === 'longest'">
-                Longest word: <span x-text="longestWord"></span>
+        <!-- totalPhoneBill -->
+        <div class="container mt-4" x-data="{ billTotal: '', enteredBill: '', showResult: false }">
+            <h3>Calculate PhoneBill Widget</h3>
+            <div class="card-body">
+                <p x-text="billTotal" x-show="showResult"></p>
+                <label for="billInput">Enter a bill:</label>
+                <input class="form-control" type="text" x-model="enteredBill" id="billInput" placeholder="enter a bill">
+                <button class="btn btn-primary mt-3"
+                    @click="calculateBill(); phonebill = enteredBill; showResult = true; setTimeout(() => showResult = false, 3000)">Done</button>
             </div>
-
-            <div x-show="resultToShow === 'shortest'">
-                Shortest word: <span x-text="shortestWord"></span>
-            </div>
-
-            <div x-show="resultToShow === 'wordLengths'">
-                Word count: <span x-text="wordLengths"></span>
-            </div>
-        </div>
-    </div>
-
-    <h3>Enough Airtime Widget</h3>
-        <div>
-            <label for="usage">Projected Usage (comma-separated):</label>
-            <input type="text" x-model="usage" id="usage">
-        </div>
-        <div>
-            <label for="available">Available Airtime:</label>
-            <input type="number" x-model="available" id="available">
-        </div>
-        <div>
-            <button x-on:click="checkAirtime">Check Airtime</button>
-        </div>
-        <div x-show="result">
-            Result: <span x-text="result"></span>
-        </div>
-    
-    <!-- totalPhoneBill -->
-    <div class="container mt-4">
-        <h3>Calculate Bill Wiget</h3>
-        <div class="card-body">
-            <label for="billInput">Enter a bill:</label>
-            <input class="form-control" type="text" x-model="enteredBill" id="billInput" placeholder="enter a bill">
-            <button class="btn btn-primary mt-3" @click="calculateBill">Done</button>
-           
-            <!-- Clear button -->
+            <!-- Clear button for the bill -->
             <button class="btn btn-secondary mt-3" @click="clearForm">Clear</button>
         </div>
     </div>

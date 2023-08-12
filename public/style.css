@@ -1,3 +1,14 @@
 body {
     background-color:lightblue;
 }
+
+.container {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    padding: 10px;
+    border: 1px solid black
+}
+
+.card-body {
+    padding: 20px;
+}
