@@ -70,86 +70,90 @@
             }
         }">
 
-        <!-- Enough airtime -->
+        <!-- Word game -->
         <div class="container mt-4">
-
-            <h3>Word game Widget</h3>
-            <div>
-                <textarea x-model="sentence" name="" id="" cols="30" rows="5"></textarea>
-                <div><button x-on:click="checkSentence">Check Sentence</button></div>
+            <h3>Word Game Widget</h3>
+            <div class="mb-3">
+                <textarea x-model="sentence" class="form-control" rows="5"></textarea>
+                <div class="mt-3">
+                    <button x-on:click="checkSentence" class="btn btn-primary">Check Sentence</button>
+                </div>
             </div>
-
-            <div>
+        
+            <div class="mb-3">
                 <!-- Radio buttons for the results -->
-                <div>
-                    <input type="radio" id="longest" name="result" value="longest" x-model="resultToShow">
-                    <label for="longest">Longest word: <span x-text="longestWord"></span></label>
+                <div class="form-check">
+                    <input type="radio" id="longest" name="result" value="longest" x-model="resultToShow" class="form-check-input">
+                    <label for="longest" class="form-check-label">Longest word: <span x-text="longestWord"></span></label>
                 </div>
-
-                <div>
-                    <input type="radio" id="shortest" name="result" value="shortest" x-model="resultToShow">
-                    <label for="shortest">Shortest word: <span x-text="shortestWord"></span></label>
+        
+                <div class="form-check">
+                    <input type="radio" id="shortest" name="result" value="shortest" x-model="resultToShow" class="form-check-input">
+                    <label for="shortest" class="form-check-label">Shortest word: <span x-text="shortestWord"></span></label>
                 </div>
-
-                <div>
-                    <input type="radio" id="wordLengths" name="result" value="wordLengths" x-model="resultToShow">
-                    <label for="wordLengths">Word count: <span x-text="wordLengths"></span></label>
+        
+                <div class="form-check">
+                    <input type="radio" id="wordLengths" name="result" value="wordLengths" x-model="resultToShow" class="form-check-input">
+                    <label for="wordLengths" class="form-check-label">Word Lengths: <span x-text="wordLengths"></span></label>
                 </div>
             </div>
-
+        
             <div>
                 <!-- Display the selected result -->
                 <div x-show="resultToShow === 'longest'">
                     Longest word: <span x-text="longestWord"></span>
                 </div>
-
+        
                 <div x-show="resultToShow === 'shortest'">
                     Shortest word: <span x-text="shortestWord"></span>
                 </div>
-
+        
                 <div x-show="resultToShow === 'wordLengths'">
-                    Word count: <span x-text="wordLengths"></span>
+                    Word Lengths: <span x-text="wordLengths"></span>
                 </div>
             </div>
         </div>
         
         <div class="container mt-4">
             <h3>Enough Airtime Widget</h3>
-            <div>
-                <label for="usage">Projected Usage:</label>
-                <input type="text" x-model="usage1" id="usage">
+            <div class="mb-3">
+                <label for="usage" class="form-label">Projected Usage:</label>
+                <input type="text" x-model="usage1" id="usage" class="form-control">
             </div>
             <br>
-            <div>
-                <label for="available">Available Airtime:</label>
-                <input type="number" x-model="available1" id="available">
+            <div class="mb-3">
+                <label for="available" class="form-label">Available Airtime:</label>
+                <input type="number" x-model="available1" id="available" class="form-control">
             </div>
             <br>
-            <div>
-                <button x-on:click="checkAirtime">Check Airtime</button>
+            <div class="mb-3">
+                <button x-on:click="checkAirtime" class="btn btn-primary">Check Airtime</button>
             </div>
             <br>
-            <button class="btn btn-secondary mt-3" x-on:click="clearForm">Clear</button>
+            <div class="mb-3">
+                <button class="btn btn-secondary" x-on:click="clearForm">Clear</button>
+            </div>
             <br>
             <div x-show="result">
                 Result: <span x-text="result"></span>
             </div>
         </div>
-
+        
         <!-- totalPhoneBill -->
         <div class="container mt-4" x-data="{ billTotal: '', enteredBill: '', showResult: false }">
             <h3>Calculate PhoneBill Widget</h3>
             <div class="card-body">
                 <p x-text="billTotal" x-show="showResult"></p>
-                <label for="billInput">Enter a bill:</label>
-                <input class="form-control" type="text" x-model="enteredBill" id="billInput" placeholder="enter a bill">
+                <label for="billInput" class="form-label">Enter a bill:</label>
+                <input class="form-control" type="text" x-model="enteredBill" id="billInput" placeholder="Enter a bill">
                 <button class="btn btn-primary mt-3"
                     @click="calculateBill(); phonebill = enteredBill; showResult = true; setTimeout(() => showResult = false, 3000)">Done</button>
             </div>
+            <br>
             <!-- Clear button for the bill -->
             <button class="btn btn-secondary mt-3" @click="clearForm">Clear</button>
         </div>
-    </div>
+        
 
 </body>
 </html>
