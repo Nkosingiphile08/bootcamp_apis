@@ -5,16 +5,16 @@ GET http://localhost:4009/api/word_game?sentence=The%20dog%20jumped%20over%20the
 GET http://localhost:4009/api/phonebill/prices?type=sms&price=0.65
 
 ###
-POST http://localhost:4009/api/phonebill/price
+POST http://localhost:4009/api/phonebill/localhost:4009/api/phonebill/prices?type=sms&price=0.65
 Content-Type: application/json
 
 {
   "type": "call",
-  "types": "2.75"
+"types": "2.75"
 }
 
 ###
-GET http://localhost:4009/api/phonebill/prices
+GET http://localhost:4009//phonebill/prices
 {
  "call" : "2.75",
  "sms" : "0.65"
@@ -50,3 +50,5 @@ Content-Type: application/json
   "usage": "call,sms,call",
   "available": 54
 }
+
+

@@ -32,6 +32,7 @@
                     });
             },
             billTotal: '',
+            showResult: false,
             usage: '',
             available: '',
             usage1: '',
@@ -47,13 +48,9 @@
                     this.billTotal = result.data.bill
                 })
             },
-            clearForm() {    
-                this.enteredBill = '';
-                this.showResult = false;
-            },
 
             checkAirtime() {
-                axios.get(`/api/enough?usage=${this.usage}&available=${this.available}`)
+                axios.get(`/api/enough?usage=${this.usage1}&available=${this.available1}`)
                 .then((response) => {
                     this.result = response.data.result;
                 })
@@ -140,18 +137,15 @@
         </div>
         
         <!-- totalPhoneBill -->
-        <div class="container mt-4" x-data="{ billTotal: '', enteredBill: '', showResult: false }">
+        <div class="container mt-4">
             <h3>Calculate PhoneBill Widget</h3>
             <div class="card-body">
                 <p x-text="billTotal" x-show="showResult"></p>
                 <label for="billInput" class="form-label">Enter a bill:</label>
                 <input class="form-control" type="text" x-model="enteredBill" id="billInput" placeholder="Enter a bill">
                 <button class="btn btn-primary mt-3"
-                    @click="calculateBill(); phonebill = enteredBill; showResult = true; setTimeout(() => showResult = false, 3000)">Done</button>
+                    @click="(calculateBill), (phonebill = enteredBill), (showResult = true), (setTimeout(() => showResult = false, 3000))">Done</button>
             </div>
-            <br>
-            <!-- Clear button for the bill -->
-            <button class="btn btn-secondary mt-3" @click="clearForm">Clear</button>
         </div>
         
 
