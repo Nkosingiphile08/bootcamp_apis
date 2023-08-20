@@ -2,10 +2,14 @@
 GET http://localhost:4009/api/word_game?sentence=The%20dog%20jumped%20over%20the%20shipyard%20fence%20in%20Greenvillage
 
 ###
+GET https://web-for-bootcamp-widget.onrender.com
+Content-Type: application/json
+
+###
 GET http://localhost:4009/api/phonebill/prices?type=sms&price=0.65
 
 ###
-POST http://localhost:4009/api/phonebill/localhost:4009/api/phonebill/prices?type=sms&price=0.65
+POST http://localhost:4009/api/phonebill/localhost:4009/api/phonebill/prices
 Content-Type: application/json
 
 {
